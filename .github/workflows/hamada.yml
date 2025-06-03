@@ -18,7 +18,6 @@ jobs:
     runs-on: ${{matrix.operating_system}}
 
     steps:
-      #use uses with actions not run
       - name: Checkout
         uses: actions/checkout@v4
 
