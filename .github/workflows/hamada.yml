@@ -1,4 +1,4 @@
-name: fourth wt
+name: fourth wf
 
 on:
   workflow_dispatch:
@@ -12,23 +12,26 @@ jobs:
     name: Unit Testing
     strategy:
       matrix:
-        node_version: [18, 22]
+        node_version: [18, 20]
         operating_system: [ubuntu-latest, macos-latest]
 
-    runs-on: ${{matrix.operating_system}}
+    runs-on: ${{ matrix.operating_system }}
+
+    defaults:
+      run:
+        working-directory: .
 
     steps:
-      #use uses with actions not run
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{matrix.node_version}}
+          node-version: ${{ matrix.node_version }}
 
-      - name: install npm
+      - name: Install dependencies
         run: npm install
 
-      - name: unit testing
+      - name: Run unit tests
         run: npm test
