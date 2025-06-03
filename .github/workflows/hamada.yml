@@ -1,4 +1,4 @@
-name: CI Workflow
+name: fourth wf
 
 on:
   workflow_dispatch:
@@ -15,19 +15,20 @@ jobs:
         node_version: [18, 20]
         operating_system: [ubuntu-latest, macos-latest]
 
-    runs-on: ${{ matrix.operating_system }}
+    runs-on: ${{matrix.operating_system}}
 
     steps:
+      #use uses with actions not run
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v4.4.0
+      - name: Setup node
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node_version }}
+          node-version: ${{matrix.node_version}}
 
-      - name: Install npm dependencies
+      - name: install npm
         run: npm install
 
-      - name: Run unit tests
+      - name: unit testing
         run: npm test
