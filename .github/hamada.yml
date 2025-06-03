@@ -1,0 +1,10 @@
+name: first wf
+
+on: push
+
+jobs:
+    first-job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: print my name
+              run: echo "ITI"
