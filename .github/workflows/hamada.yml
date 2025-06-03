@@ -12,7 +12,7 @@ jobs:
     name: Unit Testing
     strategy:
       matrix:
-        node_version: [18, 20]
+        node_version: [18, 22]
         operating_system: [ubuntu-latest, macos-latest]
 
     runs-on: ${{matrix.operating_system}}
