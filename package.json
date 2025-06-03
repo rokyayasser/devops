@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"No tests specified\" && exit 0",
-    "coverage": "nyc npm test"
+    "coverage": "No tests specified"
   },
   "license": "MIT"
 }
