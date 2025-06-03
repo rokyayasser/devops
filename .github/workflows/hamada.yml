@@ -1,4 +1,4 @@
-name: Solar System App
+name: fourth wf
 
 on:
   workflow_dispatch:
@@ -10,31 +10,58 @@ on:
 jobs:
   unit-testing:
     name: Unit Testing
-    # matrix strategy di zy el for loop
     strategy:
       matrix:
         node_version: [18, 20]
         operating_system: [ubuntu-latest, macos-latest]
-    runs-on: ${{ matrix.operating_system }}
+
+    runs-on: ${{matrix.operating_system}}
+
     steps:
+      #use uses with actions not run
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v4.4.0
+      - name: Setup node
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node_version }}
+          node-version: ${{matrix.node_version}}
 
-      - name: Install npm dependencies
+      - name: install npm
         run: npm install
 
-      - name: Run unit tests
-        # id: hamada
+      - name: unit testing
         run: npm test
 
       - uses: actions/upload-artifact@v4
-        #if: steps.hamada == 'failure' || steps.hamada == 'success'
         if: failure() || success()
         with:
           name: moch-test-result
           path: test-results.xml
+
+  code-coverage:
+    name: Unit Testing
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: install npm
+        run: npm install
+
+      - name: unit testing
+        run: npm run coverage
+
+      - uses: actions/upload-artifact@v4
+        if: failure() || success()
+        with:
+          name: code-coverage-result
+          path: coverage
+          retention-days: 5
