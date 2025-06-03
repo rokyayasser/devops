@@ -1,4 +1,4 @@
-name: fourth wf
+name: fourth
 
 on:
   workflow_dispatch:
