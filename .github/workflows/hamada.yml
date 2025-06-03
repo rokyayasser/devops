@@ -28,7 +28,11 @@ jobs:
           node-version: ${{matrix.node_version}}
 
       - name: install npm
-        run: npm install
+        run: |
+          cd devops
+          npm install
 
       - name: unit testing
-        run: npm test
+        run: |
+          cd devops
+           npm test
