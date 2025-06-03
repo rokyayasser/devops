@@ -1,4 +1,4 @@
-name: fourth wf
+name: Solar system App
 
 on:
   workflow_dispatch:
@@ -6,57 +6,51 @@ on:
     branches:
       - main
       - "feature/*"
-
 jobs:
   unit-testing:
-    name: Unit Testing
+    name: My Unit testing
     strategy:
       matrix:
-        node_version: [18, 20]
+        node_version: [18, 22]
         operating_system: [ubuntu-latest, macos-latest]
-
-    runs-on: ${{matrix.operating_system}}
-
+    runs-on: ${{ matrix.operating_system }}
     steps:
-      #use uses with actions not run
       - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/checkout/@v4.2.2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.4.0
         with:
-          node-version: ${{matrix.node_version}}
-
+          node-version: ${{ matrix.node_version }}
       - name: install npm
-        run: npm install
+        run: npm i
 
-      - name: unit testing
+      - name: run unit tests
+        # id: may-fail
         run: npm test
 
-      - uses: actions/upload-artifact@v4
+      - name: using Artifacts
+        uses: actions/upload-artifact@v4
+        # if: steps.may-fail == 'failure' || steps.may-fail == 'success'
         if: failure() || success()
         with:
           name: moch-test-result
           path: test-results.xml
 
   code-coverage:
-    name: Unit Testing
+    name: My Code coverage
 
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/checkout/@v4.2.2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.4.0
         with:
           node-version: 20
-
       - name: install npm
-        run: npm install
+        run: npm i
 
-      - name: unit testing
+      - name: run code coverage
         run: npm run coverage
 
       - uses: actions/upload-artifact@v4
