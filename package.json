@@ -4,7 +4,8 @@
   "description": "A sample project to run unit tests",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"No tests specified\" && exit 0"
+    "test": "echo \"No tests specified\" && exit 0",
+    "coverage": "nyc npm test"
   },
   "license": "MIT"
 }
