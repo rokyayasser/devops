@@ -1,4 +1,4 @@
-name: fourth wf
+name: Solar System App
 
 on:
   workflow_dispatch:
@@ -10,28 +10,31 @@ on:
 jobs:
   unit-testing:
     name: Unit Testing
+    # matrix strategy di zy el for loop
     strategy:
       matrix:
         node_version: [18, 20]
         operating_system: [ubuntu-latest, macos-latest]
-
     runs-on: ${{ matrix.operating_system }}
-
-    defaults:
-      run:
-        working-directory: .
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.4.0
         with:
           node-version: ${{ matrix.node_version }}
 
-      - name: Install dependencies
+      - name: Install npm dependencies
         run: npm install
 
       - name: Run unit tests
+        # id: hamada
         run: npm test
+
+      - uses: actions/upload-artifact@v4
+        #if: steps.hamada == 'failure' || steps.hamada == 'success'
+        if: failure() || success()
+        with:
+          name: moch-test-result
+          path: test-results.xml
