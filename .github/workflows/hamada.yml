@@ -1,4 +1,4 @@
-name: forth wf
+name: workflow
 
 on:
   workflow_dispatch:
